@@ -19,9 +19,18 @@ client=  Client(PETPOINT_URL)
 def login():
     loginData = {"username":RGUSER,"password":RGPASSWORD,"accountNumber":RGACCNUM,"action":"login"}
     headers={"Content-Type": "application/vnd.api+json"}
-    response = requests.post(V2_URL,headers=headers,json=loginData)
-    responseJson=json.loads(response.text)
-    return responseJson["data"]["token"], responseJson["data"]["tokenHash"]
+    
+    for attempt in range(3):
+        try:
+            response = requests.post(V2_URL, headers=headers, json=loginData, timeout=15)
+            response.raise_for_status()
+            return response.json()["data"]["token"], response.json()["data"]["tokenHash"]
+        except requests.exceptions.ConnectionError as e:
+            print(f"Attempt {attempt+1} failed: {e}")
+            if attempt < 2:
+                time.sleep(5)
+            else:
+                raise
 
 token,tokenHash=login()
 
