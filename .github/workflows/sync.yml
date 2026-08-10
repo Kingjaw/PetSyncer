@@ -1,1 +1,29 @@
+name: PetPoint to RescueGroups Sync
 
+on:
+  schedule:
+    - cron: '30 5 * * *'
+      timezone: "America/New_York"
+  workflow_dispatch: 
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run sync script
+        env:
+          RGUSER: ${{ secrets.RGUSER }}
+          RGPASSWORD: ${{ secrets.RGPASSWORD }}
+          RGACCNUM: ${{ secrets.RGACCNUM }}
+          PPAUTHKEY: ${{ secrets.PPAUTHKEY }}
+          RGAUTH: ${{ secrets.RGAUTH }}
+        run: python finalSyncer.py
