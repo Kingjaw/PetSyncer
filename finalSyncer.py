@@ -10,7 +10,7 @@ RGUSER = os.environ["RGUSER"]
 RGPASSWORD = os.environ["RGPASSWORD"]
 RGACCNUM = os.environ["RGACCNUM"]
 PPAUTHKEY = os.environ["PPAUTHKEY"]
-RGAUTH = os.environ["RESCUEGROUPS_AUTH"]
+RGAUTH = os.environ["RGAUTH"]
 
 client=  Client(PETPOINT_URL)
 
