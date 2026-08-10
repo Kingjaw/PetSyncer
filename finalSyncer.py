@@ -164,9 +164,6 @@ def getPPAdoptableDetails(id):
         dataToEdit.update({"animalSecondaryBreedID":findRGKey(results,{},dogBreeds,"SecondaryBreed")})
     return dataToEdit
 
-def editAnimal(data):
-    print('edit')
-
 #Helper function for retrieving data from petpoint
 def findRGKey(results, catKeys,dogKeys,dataType):
     rgKeys ={}
