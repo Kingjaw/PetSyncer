@@ -26,7 +26,7 @@ jobs:
           RGACCNUM: ${{ secrets.RGACCNUM }}
           PPAUTHKEY: ${{ secrets.PPAUTHKEY }}
           RGAUTH: ${{ secrets.RGAUTH }}
-        run: python test.py > ouptut.txt
+        run: python test.py > output.txt
       - name: Upload log
         if: always()
         uses: actions/upload-artifact@v4
