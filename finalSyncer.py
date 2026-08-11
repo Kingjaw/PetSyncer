@@ -33,6 +33,8 @@ def login():
                 raise
 
 token,tokenHash=login()
+newCats=0
+totalErrors=0
 
 def gatherDicts():
     results= client.service.AdoptableSearch(authkey=PPAUTHKEY,
@@ -86,8 +88,11 @@ def createAnimal(data):
     }   
     response = requests.post(V2_URL,json=payload,headers=headers)
     print(json.dumps(response.json(), indent=2))
-
-
+    if (response["status"]=="ok"):
+        newCats+=1
+    else:
+        totalErrors+=1
+        
 def getPPAdoptableDetails(id):
     results= client.service.AdoptableDetails(
     authkey=PPAUTHKEY,
@@ -152,7 +157,7 @@ def getPPAdoptableDetails(id):
     dogPatterns={"Bicolor": "5", "Brindle": "2", "Merle": "3", "Patches": "4", "Spots": "1", "Tricolor": "6"}
     dataToEdit.update({"animalPatternID":findRGKey(results,catPatterns,dogPatterns,"ColorPattern")})
 
-    catColors={"Black": "1", "Black (Mostly)": "5", "Black and White": "6", "Blue": "52", "Blue (Mostly)": "64", "Brown": "7", "Brown (Mostly)": "8", "Brown Tabby": "9", "Calico or Dilute Calico": "10", "Chocolate": "62", "Chocolate (Mostly)": "63", "Cream": "2", "Cream (Mostly)": "3", "Cream and White": "615", "Fawn": "54", "Fawn (Mostly)": "66", "Fawn Tabby": "19","Grey": "11", "Gray": "11", "Gray (Mostly)": "12", "Gray and White": "616", "Gray, Blue or Silver Tabby": "13", "Ivory": "60", "Ivory (Mostly)": "61", "Orange": "14", "Orange (Mostly)": "15", "Orange and White": "617", "Red": "53", "Red (Mostly)": "65", "Red Tabby": "16", "Spotted Tabby/Leopard Spotted": "4", "Tan": "17", "Tan (Mostly)": "18", "Tortoiseshell": "20", "Tuxedo": "67", "White": "21", "White (Mostly)": "22"}
+    catColors={"Black": "1", "Black (Mostly)": "5", "Black and White": "6", "Blue": "52", "Blue (Mostly)": "64", "Brown": "7", "Brown (Mostly)": "8", "Brown Tabby": "9", "Calico or Dilute Calico": "10", "Chocolate": "62", "Chocolate (Mostly)": "63", "Cream": "2", "Cream (Mostly)": "3", "Cream and White": "615", "Fawn": "54", "Fawn (Mostly)": "66", "Fawn Tabby": "19","Grey": "11", "Gray": "11", "Gray (Mostly)": "12", "Gray and White": "616", "Gray, Blue or Silver Tabby": "13", "Ivory": "60", "Ivory (Mostly)": "61", "Orange": "14", "Orange (Mostly)": "15", "Buff": "15", "Orange and White": "617", "Red": "53", "Red (Mostly)": "65", "Red Tabby": "16", "Spotted Tabby/Leopard Spotted": "4", "Tan": "17", "Tan (Mostly)": "18", "Tortoiseshell": "20", "Tuxedo": "67", "White": "21", "White (Mostly)": "22"}
     dogColors={"Black": "23", "Black with Brown, Red, Golden, Orange or Chestnut": "41", "Black with Gray or Silver": "42", "Black with Tan, Yellow or Fawn": "24", "Black with White": "25", "Blue/Silver/Salt & Pepper": "44", "Brindle": "26", "Brindle with White": "27", "Brown/Chocolate": "28", "Brown/Chocolate with Black": "29", "Brown/Chocolate with Tan": "43", "Brown/Chocolate with White": "30", "Fawn": "35", "Golden/Chestnut": "31", "Gray": "59","Grey": "59", "Gray/Silver/Salt & Pepper with Black": "46", "Gray/Silver/Salt & Pepper with White": "45", "Lemon with White": "620", "Liver with White": "619", "Merle": "47", "Orange": "56", "Red": "55", "Red/Golden/Orange/Chestnut with Black": "32", "Red/Golden/Orange/Chestnut with White": "33", "Sable": "618", "Silver & Tan (Yorkie colors)": "34", "Tan": "57", "Tan/Yellow/Fawn with Black": "48", "Tan/Yellow/Fawn with White": "36", "Tricolor (Tan/Brown & Black & White)": "37", "White": "38", "White with Black": "39", "White with Brown or Chocolate": "40", "White with Gray or Silver": "51", "White with Red, Golden, Orange or Chestnut": "50", "White with Tan, Yellow or Fawn": "49", "Yellow": "58"}
     dataToEdit.update({"animalColorID":findRGKey(results,catColors,dogColors,"PrimaryColor")})
 
@@ -252,8 +257,11 @@ print("DISCREPANCIES-----")
 abscences=findDiscrepancies(ppData,rgData)
 for id in abscences:
     safeCreateRecord(id)
+print(newCats+' new records created.')
+print(errors+' errors found.')
+if (errors > 0):
+    print('Errors are likely due to invalid Petpoint fields.')
 if len(abscences)>0:
     print('All new records listed as pending in RescueGroups.')
 else:
     print('No new records need to be made.')
-#print(json.dumps(getPPAdoptableDetails("61354035"),indent=2))
