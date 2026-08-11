@@ -262,7 +262,7 @@ for id in abscences:
     safeCreateRecord(id)
 print(str(newCats)+' new records created.')
 print(str(totalErrors)+' errors found.')
-if (errors > 0):
+if (totalErrors > 0):
     print('Errors are likely due to invalid Petpoint fields.')
 if len(abscences)>0:
     print('All new records listed as pending in RescueGroups.')
