@@ -30,7 +30,7 @@ def login():
         try:
             with requests.Session() as session:
                 session.keep_alive=False
-                response = requests.post(V2_URL, headers=headers, json=loginData, timeout=15)
+                response = requests.post(V2_URL, headers=headers, json=loginData, proxies=proxies, timeout=15)
                 response.raise_for_status()
                 return response.json()["data"]["token"], response.json()["data"]["tokenHash"]
         except requests.exceptions.RequestException as e:
