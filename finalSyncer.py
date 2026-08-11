@@ -3,6 +3,7 @@ import json
 from zeep import Client
 from lxml import etree
 import os
+import time
 
 V2_URL = "https://api.rescuegroups.org/http/v2.json"
 PETPOINT_URL = "http://ws.petango.com/webservices/wsAdoption.asmx?wsdl"
