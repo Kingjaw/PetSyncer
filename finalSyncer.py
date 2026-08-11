@@ -71,7 +71,8 @@ def gatherDicts():
     return ppData,rgData
 
 def createAnimal(data):
-
+    global newCats
+    global totalErrors
     headers={
     "Content-Type": "application/vnd.api+json"
     }
