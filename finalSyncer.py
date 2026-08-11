@@ -62,8 +62,8 @@ def gatherDicts():
         rescueGroupsAuth=RGAUTH
         rescueGroups_url="https://api.rescuegroups.org/v5/public/orgs/1703/animals/search/available/?limit=250&page="+str(pageNum)
         headers={"Authorization": rescueGroupsAuth, "Content-Type": "application/vnd.api+json"}
-    
-        response=requests.get(rescueGroups_url,headers=headers)
+        
+        response=requests.get(rescueGroups_url,headers=headers,proxies=proxies)
         data=response.json()
 
         for i in data["data"]:
@@ -96,7 +96,7 @@ def createAnimal(data):
     "objectAction": "add",
     "values": [vals]
     }   
-    response = requests.post(V2_URL,json=payload,headers=headers)
+    response = requests.post(V2_URL,json=payload,headers=headers,proxies=proxies)
     print(json.dumps(response.json(), indent=2))
     if (response.json()["status"]=="ok"):
         newCats+=1
@@ -208,7 +208,7 @@ def rgRunForMatch(resID):
             "fields": ["animalID","animalStatusID"],
         },
     }
-    response = requests.post(V2_URL, json=payload)
+    response = requests.post(V2_URL, json=payload,proxies=proxies)
     response.raise_for_status()
     data = response.json()
     if len(data["data"])>0:
