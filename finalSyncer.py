@@ -104,10 +104,25 @@ def createAnimal(data):
         totalErrors+=1
         
 def getPPAdoptableDetails(id):
-    results= client.service.AdoptableDetails(
-    authkey=PPAUTHKEY,
-    animalID=id
-    )
+    results = ""
+    #Does 3 retries in case of issue with Petpoint servers
+    attempts=3
+    for i in range(3):
+        try:
+            results= client.service.AdoptableDetails(
+            authkey=PPAUTHKEY,
+            animalID=id
+            )
+            if results is not None:
+                break
+        expect Fault as e:
+            if i < attempts-1:
+                time.sleep(5)
+            else:
+                print("Petpoint servers not returning correctly, skipping ID "+id)
+                return None
+
+    
     dataToEdit={"animalID": id,"animalAllowExport":"Yes","animalExportAccounts": ["3579","18975"]}
     #basic stuff that can be copied over
     dataToEdit.update({"animalName":results.find(".//AnimalName").text})
