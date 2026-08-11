@@ -115,7 +115,7 @@ def getPPAdoptableDetails(id):
             )
             if results is not None:
                 break
-        execpt Fault as e:
+        except Fault as e:
             if i < attempts-1:
                 time.sleep(5)
             else:
