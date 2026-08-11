@@ -13,8 +13,13 @@ RGPASSWORD = os.environ["RGPASSWORD"]
 RGACCNUM = os.environ["RGACCNUM"]
 PPAUTHKEY = os.environ["PPAUTHKEY"]
 RGAUTH = os.environ["RGAUTH"]
+PROXY_URL = os.environ.get("PROXY_URL")
 
 client=  Client(PETPOINT_URL)
+proxies={
+    "http": PROXY_URL,
+    "https": PROXY_URL
+} if PROXY_URL else None
 
 #Gain token access to RescueGroups through the V2 API
 def login():
@@ -23,9 +28,11 @@ def login():
     waitVal=5
     for attempt in range(3):
         try:
-            response = requests.post(V2_URL, headers=headers, json=loginData, timeout=15)
-            response.raise_for_status()
-            return response.json()["data"]["token"], response.json()["data"]["tokenHash"]
+            with requests.Session() as session:
+                session.keep_alive=False
+                response = requests.post(V2_URL, headers=headers, json=loginData, timeout=15)
+                response.raise_for_status()
+                return response.json()["data"]["token"], response.json()["data"]["tokenHash"]
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt+1} failed: {e}")
             if attempt < 2:
