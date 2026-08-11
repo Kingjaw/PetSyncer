@@ -26,14 +26,15 @@ jobs:
           RGACCNUM: ${{ secrets.RGACCNUM }}
           PPAUTHKEY: ${{ secrets.PPAUTHKEY }}
           RGAUTH: ${{ secrets.RGAUTH }}
-        run: python test.py > output.txt
+        run: python finalSyncer.py > output.txt
       - name: Upload log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-summary-${{ github.run_id }}
+          name: sync-summary-${{ github.run_id }}
           path: output.txt
           retention-days: 30
+          
       - name: Get current date
         id: date
         run: echo "today=$(TZ='America/New_York' date +'%B %d, %Y')" >> "$GITHUB_OUTPUT"
