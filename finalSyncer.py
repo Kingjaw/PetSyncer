@@ -88,7 +88,7 @@ def createAnimal(data):
     }   
     response = requests.post(V2_URL,json=payload,headers=headers)
     print(json.dumps(response.json(), indent=2))
-    if (response["status"]=="ok"):
+    if (response.json()["status"]=="ok"):
         newCats+=1
     else:
         totalErrors+=1
