@@ -261,7 +261,7 @@ abscences=findDiscrepancies(ppData,rgData)
 for id in abscences:
     safeCreateRecord(id)
 print(str(newCats)+' new records created.')
-print(str(errors)+' errors found.')
+print(str(totalErrors)+' errors found.')
 if (errors > 0):
     print('Errors are likely due to invalid Petpoint fields.')
 if len(abscences)>0:
