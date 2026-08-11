@@ -1,6 +1,8 @@
 # PetSyncer
 This is a tool for syncing data between PetPoint and RescueGroups.
 The tool runs at 5:30 AM every day, and emails the outbound email with an output log. These output logs are also saved on this page as artifacts.
+The main function is that whenever it finds a record in Petpoint that's not in Rescuegroups, it will take the data from Petpoint and use it to make a new record in RescueGroups. It also displays the discrepancies in statuses between the two databases.
+
 The output logs will display the following information in order:
 
 **Missing RescueIDs**
