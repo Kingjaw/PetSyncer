@@ -49,7 +49,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Automatic sync results for ${{ steps.date.outputs.today }}"
-          to: OUTBOUND_EMAIL
+          to: mondattam@gmail.com
           from: Pet Syncer
           body: "Attached are the results of the automatic sync for today."
           attachments: output.txt
