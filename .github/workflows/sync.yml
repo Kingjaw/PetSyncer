@@ -26,4 +26,12 @@ jobs:
           RGACCNUM: ${{ secrets.RGACCNUM }}
           PPAUTHKEY: ${{ secrets.PPAUTHKEY }}
           RGAUTH: ${{ secrets.RGAUTH }}
-        run: python finalSyncer.py
+        run: python test.py > ouptut.txt
+      - name: Upload log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-summary-${{ github.run_id }}
+          path: output.txt
+          retention-days: 30
+
