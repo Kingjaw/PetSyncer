@@ -19,16 +19,16 @@ client=  Client(PETPOINT_URL)
 #Gain token access to RescueGroups through the V2 API
 def login():
     loginData = {"username":RGUSER,"password":RGPASSWORD,"accountNumber":RGACCNUM,"action":"login"}
-    headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    headers={"Content-Type": "application/json", "Connection": "close","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
     waitVal=5
-    for attempt in range(5):
+    for attempt in range(3):
         try:
             response = requests.post(V2_URL, headers=headers, json=loginData, timeout=15)
             response.raise_for_status()
             return response.json()["data"]["token"], response.json()["data"]["tokenHash"]
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt+1} failed: {e}")
-            if attempt < 4:
+            if attempt < 2:
                 time.sleep(waitVal)
                 waitVal +=5
             else:
