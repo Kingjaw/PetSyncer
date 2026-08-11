@@ -2,8 +2,7 @@ name: PetPoint to RescueGroups Sync
 
 on:
   schedule:
-    - cron: '30 5 * * *'
-      timezone: "America/New_York"
+    - cron: '30 9 * * *'
   workflow_dispatch: 
 
 jobs:
