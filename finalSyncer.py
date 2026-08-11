@@ -263,7 +263,7 @@ for id in abscences:
 print(str(newCats)+' new records created.')
 print(str(totalErrors)+' errors found.')
 if (totalErrors > 0):
-    print('Errors are likely due to invalid Petpoint fields.')
+    print('Errors are likely due to Petpoint fields that aren't filled in.')
 if len(abscences)>0:
     print('All new records listed as pending in RescueGroups.')
 else:
