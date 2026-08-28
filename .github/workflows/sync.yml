@@ -25,7 +25,7 @@ jobs:
           RGACCNUM: ${{ secrets.RGACCNUM }}
           PPAUTHKEY: ${{ secrets.PPAUTHKEY }}
           RGAUTH: ${{ secrets.RGAUTH }}
-          PROXY_URL: ${{ secrets.WEBSHAREKEY }}
+          WEBSHAREKEY: ${{ secrets.WEBSHAREKEY }}
         run: python finalSyncer.py > output.txt
       - name: Upload log
         if: always()
