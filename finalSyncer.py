@@ -13,13 +13,23 @@ RGPASSWORD = os.environ["RGPASSWORD"]
 RGACCNUM = os.environ["RGACCNUM"]
 PPAUTHKEY = os.environ["PPAUTHKEY"]
 RGAUTH = os.environ["RGAUTH"]
-PROXY_URL = os.environ.get("PROXY_URL")
-
+WEBSHAREKEY=os.environ["WEBSHAREKEY"]
 client=  Client(PETPOINT_URL)
+
+#grab proxy list from webshare first
+response=requests.get(
+    "https://proxy.webshare.io/api/v2/proxy/list/?mode=direct",
+    headers={ "Authorization": WEBSHAREKEY }
+)
+#auto chooses the first proxy
+prox=response.json()['results'][0]
+proxyURL=f"http://{prox['username']}:{prox['password']}@{prox['proxy_address']}:{prox['port']}"
+
+
 proxies={
-    "http": PROXY_URL,
-    "https": PROXY_URL
-} if PROXY_URL else None
+    "http": proxyURL,
+    "https": proxyURL
+} if proxyURL else None
 
 #Gain token access to RescueGroups through the V2 API
 def login():
