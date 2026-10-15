@@ -22,7 +22,7 @@ response=requests.get(
     headers={ "Authorization": WEBSHAREKEY }
 )
 #auto chooses the first proxy
-prox=response.json()['results'][1]
+prox=response.json()['results'][2]
 proxyURL=f"http://{prox['username']}:{prox['password']}@{prox['proxy_address']}:{prox['port']}"
 print(proxyURL)
 
