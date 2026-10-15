@@ -35,11 +35,11 @@ proxies={
 def login():
     #testing
     for url in ["https://api.ipify.org", "https://api.rescuegroups.org/"]:
-    try:
-        r = requests.get(url, proxies=proxies, timeout=(10, 20))
-        print(url, r.status_code, r.text[:80])
-    except Exception as e:
-        print(url, "FAILED", repr(e))
+        try:
+            r = requests.get(url, proxies=proxies, timeout=(10, 20))
+            print(url, r.status_code, r.text[:80])
+        except Exception as e:
+            print(url, "FAILED", repr(e))
         
     loginData = {"username":RGUSER,"password":RGPASSWORD,"accountNumber":RGACCNUM,"action":"login"}
     headers={"Content-Type": "application/json", "Connection": "close","User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
