@@ -24,7 +24,7 @@ response=requests.get(
 #auto chooses the first proxy
 prox=response.json()['results'][1]
 proxyURL=f"http://{prox['username']}:{prox['password']}@{prox['proxy_address']}:{prox['port']}"
-
+print(proxyURL)
 
 proxies={
     "http": proxyURL,
